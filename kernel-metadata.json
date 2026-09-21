@@ -1,0 +1,16 @@
+{
+  "id": "redaabanouas/tp1-fake-news",
+  "title": "tp1-fake-news",
+  "code_file": "main.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": "true",
+  "enable_gpu": "true",
+  "enable_tpu": "false",
+  "enable_internet": "true",
+  "machine_shape": "",
+  "dataset_sources": ["clmentbisaillon/fake-and-real-news-dataset"],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
