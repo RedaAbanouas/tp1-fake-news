@@ -160,11 +160,33 @@ Articles:
 
 test_df = pd.read_csv("./output/test.csv")
 
-X_test = test_df["content"]
-y_test = test_df["label"]
+fake_test = test_df[test_df["label"] == 0].sample(
+    n=64,
+    random_state=42
+)
+
+real_test = test_df[test_df["label"] == 1].sample(
+    n=64,
+    random_state=42
+)
+
+# Combine Fake and Real examples
+test_balanced = pd.concat(
+    [fake_test, real_test],
+    ignore_index=True
+)
+
+# Shuffle the final test set
+test_balanced = test_balanced.sample(
+    frac=1,
+    random_state=42
+).reset_index(drop=True)
+
+X_test = test_balanced["content"]
+y_test = test_balanced["label"]
 
 
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 NUM_BATCHES = 4
 
 NUM_ARTICLES = BATCH_SIZE * NUM_BATCHES
