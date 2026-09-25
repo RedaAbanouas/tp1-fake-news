@@ -1,10 +1,10 @@
-curl -LsSf https://astral.sh/uv/install.sh | sh
+docker build -t tp1-fake-news .
+docker run --rm -it --env-file .env --name fake-news-container tp1-fake-news
 
-uv python install 3.12
-uv python pin 3.12
-
-uv init && uv venv
-source .venv/bin/activate
-
-uv add kaggle pandas groq scikit-learn matplotlib python-dotenv
+uv run python kaggle_run.py
 kaggle kernels output $KAGGLE_USERNAME/tp1-fake-news -p ./output --force
+
+uv run python llm_prompt.py
+
+(outside the container in the project directory)
+docker cp fake-news-container:/app/output .
