@@ -7,3 +7,4 @@ uv init && uv venv
 source .venv/bin/activate
 
 uv add kaggle pandas groq scikit-learn matplotlib python-dotenv
+kaggle kernels output $KAGGLE_USERNAME/tp1-fake-news -p ./output --force

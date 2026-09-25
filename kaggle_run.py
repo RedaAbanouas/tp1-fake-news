@@ -11,12 +11,17 @@ if not username:
 KERNEL = f"{username}/tp1-fake-news"
 
 PROJECT_DIR = Path("/app")
-OUTPUT_DIR = Path("output")
+OUTPUT_DIR = PROJECT_DIR / "output"
+
+
+# --------------------------------------------------
+# Generate Kaggle metadata
+# --------------------------------------------------
 
 metadata = {
-    "id": f"{username}/tp1-fake-news",
+    "id": KERNEL,
     "title": "tp1-fake-news",
-    "code_file": "tp1-fake-news.ipynb",
+    "code_file": "main.ipynb",
     "language": "python",
     "kernel_type": "notebook",
     "is_private": True,
@@ -36,52 +41,40 @@ with metadata_path.open("w", encoding="utf-8") as file:
     json.dump(metadata, file, indent=4)
 
 print(f"Generated: {metadata_path}")
-print(f"Kaggle kernel: {metadata['id']}")
+print(f"Kernel: {KERNEL}")
 
 
 # --------------------------------------------------
-# Push notebook and start Kaggle execution
+# Push notebook
 # --------------------------------------------------
 
 print("Pushing notebook to Kaggle...")
 
 subprocess.run(
-    ["kaggle", "kernels", "push", "-p", "."],
+    [
+        "kaggle",
+        "kernels",
+        "push",
+        "-p",
+        str(PROJECT_DIR),
+    ],
     check=True,
 )
 
 
 # --------------------------------------------------
-# Follow Kaggle execution logs
+# Follow Kaggle logs
 # --------------------------------------------------
 
 print("Following Kaggle notebook logs...")
 
 subprocess.run(
-    ["kaggle", "kernels", "logs", KERNEL, "--follow"],
-    check=True,
-)
-
-
-# --------------------------------------------------
-# Download Kaggle outputs
-# --------------------------------------------------
-
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-print("Downloading Kaggle outputs...")
-
-subprocess.run(
     [
         "kaggle",
         "kernels",
-        "output",
+        "logs",
         KERNEL,
-        "-p",
-        str(OUTPUT_DIR),
-        "--force",
+        "--follow",
     ],
     check=True,
 )
-
-print(f"Outputs downloaded to: {OUTPUT_DIR}")
