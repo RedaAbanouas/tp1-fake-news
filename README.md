@@ -31,7 +31,14 @@ notebook produces.
 - A [Google Gemini API key](https://aistudio.google.com/apikey) (needed for
   the LLM classification step)
 
-## 1. Configure credentials
+## 1. Clone the repository
+
+```bash
+git clone https://github.com/RedaAbanouas/tp1-fake-news.git
+cd tp1-fake-news
+```
+
+## 2. Configure credentials
 
 Create a new `.env` file in the project root, using `.env.example` as the
 template:
@@ -42,20 +49,17 @@ KAGGLE_API_KEY=your_kaggle_api_key
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
-## 2. Build and start the container
+## 3. Build and start the container
 
 ```bash
 docker build -t tp1-fake-news .
-```
-
-```bash
 docker run --rm -it --env-file .env --name fake-news-container tp1-fake-news
 ```
 
 This drops you into a shell inside `/app`, with dependencies already
 installed via `uv sync` at build time.
 
-## 3. Run the notebook on Kaggle (Parts A & B)
+## 4. Run the notebook on Kaggle (Parts A & B)
 
 From inside the container:
 
@@ -90,7 +94,7 @@ Once the Kaggle run finishes, pull its output (including `test.csv`) locally:
 kaggle kernels output $KAGGLE_USERNAME/tp1-fake-news -p ./output --force
 ```
 
-## 4. Run the LLM baseline (Part C)
+## 5. Run the LLM baseline (Part C)
 
 Still inside the container, with `./output/test.csv` present:
 
@@ -105,7 +109,7 @@ classification (with retry/backoff on transient `503`s), and writes:
 - `./output/llm_confusion_matrix.png`
 - `./output/llm_metrics.json` (accuracy, F1, inference time, model name)
 
-## 5. Retrieve results from the container
+## 6. Retrieve results from the container
 
 If you ran step 4 without a mounted volume, copy the results out to the host
 (from a separate terminal, outside the container, in the project directory):
