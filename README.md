@@ -46,6 +46,9 @@ GEMINI_API_KEY=your_gemini_api_key
 
 ```bash
 docker build -t tp1-fake-news .
+```
+
+```bash
 docker run --rm -it --env-file .env --name fake-news-container tp1-fake-news
 ```
 
@@ -110,11 +113,3 @@ If you ran step 4 without a mounted volume, copy the results out to the host
 ```bash
 docker cp fake-news-container:/app/output .
 ```
-
-## Notes
-
-- The three approaches are meant to be compared on accuracy/F1 and training
-  or inference time — see each part's printed metrics / `llm_metrics.json`.
-- `main.ipynb` can also be run directly in a Kaggle notebook environment
-  without `kaggle_run.py`, as long as the dataset is attached and
-  `RUN_BASELINE` / `RUN_PLM` flags at the top are set as desired.
